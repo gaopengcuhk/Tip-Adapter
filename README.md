@@ -1,4 +1,4 @@
-# Official Code Release for "Tip-Adapter: Training-free CLIP-Adapter for Better Vision-Language Modeling"
+# Official Code Release for "TIP-Adapter: Training-free clIP-Adapter for Better Vision-Language Modeling"
 
 # Contributor
 Peng Gao, Renrui Zhang
