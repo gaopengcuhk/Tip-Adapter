@@ -3,7 +3,7 @@
 # Pipeline of Tip-Adapter
 Tip-Adapter can provide fast convergence and better performance by leveraging cache-model as initialization of adapter.
 <div align="center">
-  <img src="cache_model.pdf"/>
+  <img src="cache_model.png"/>
 </div>
 
 # Contributor
