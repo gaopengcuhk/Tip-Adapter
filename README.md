@@ -7,7 +7,7 @@ Tip-Adapter provides faster convergence and better performance by initializing t
 </div>
 
 # Implementation
-Put ``Tip_Adapter_ImageNet.py`` into clip's folder and run 
+Put ``tip_adapter_ImageNet.py`` into clip's folder and run 
 
     python tip_adapter_ImageNet.py
 
