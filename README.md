@@ -1,5 +1,5 @@
-# TiP-Adapter: Training-free CLIP-Adapter for Better Vision-Language Modeling
-This is the official code release for the paper ['TiP-Adapter: Training-free CLIP-Adapter for Better Vision-Language Modeling'](https://arxiv.org/abs/2111.03930).
+# Tip-Adapter: Training-free Adaption of CLIP for Few-shot Classification
+Official implementation of the **ECCV 2022** paper ['Tip-Adapter: Training-free Adaption of CLIP for Few-shot Classification'](https://arxiv.org/abs/2111.03930).
 ## Introduction
 Tip-Adapter provides faster convergence and better performance than CLIP-Adapter by initializing the adapter with a cache model.
 
