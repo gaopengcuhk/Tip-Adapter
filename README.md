@@ -27,6 +27,9 @@ conda install pytorch torchvision cudatoolkit
 Follow [DATASET.md](https://github.com/gaopengcuhk/Tip-Adapter/blob/main/DATASET.md) to install ImageNet and other 10 datasets referring to CoOp.
 
 ## Get Started
+### ImageNet
+
+### Other 10 datasets
 
 ## Contributors
 Peng Gao, [Renrui Zhang](https://github.com/ZrrSkywalker)
