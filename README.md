@@ -14,7 +14,7 @@ Create a conda environment and install dependencies:
 git clone https://github.com/gaopengcuhk/Tip-Adapter.git
 cd Tip-Adapter
 
-conda create -n pointclip python=3.7
+conda create -n tip_adapter python=3.7
 conda activate tip_adapter
 
 pip install -r requirements.txt
