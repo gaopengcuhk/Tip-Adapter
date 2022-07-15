@@ -27,9 +27,28 @@ conda install pytorch torchvision cudatoolkit
 Follow [DATASET.md](https://github.com/gaopengcuhk/Tip-Adapter/blob/main/DATASET.md) to install ImageNet and other 10 datasets referring to CoOp.
 
 ## Get Started
-### ImageNet
+### Configs
+The running configurations can be modified in `configs/dataset.yaml`, including shot numbers, visual encoders, and hyperparamters. 
 
-### Other 10 datasets
+For simplicity, we provide the hyperparamters achieving the overall best performance on 1\~16 shots for a dataset, which accord with the scores reported in the paper. If respectively tuned for different shot numbers, the 1\~16-shot performance can be further improved. You can edit the `search_scale`, `search_step`, `init_beta` and `init_alpha` for fine-grained tuning.
+
+Note that the default `load_cache` and `load_pre_feat` are `False` for the first running, which will store the cache model and val/test features in `configs/dataset/`. For later running, they can be set as `True` for faster hyperparamters tuning.
+
+### Numerical Results
+We provide Tip-Adapter's **numerical results** in Figure 4 and 5 of the paper at [exp.log](https://github.com/gaopengcuhk/Tip-Adapter/blob/main/exp.log).
+
+TODO: Add CLIP-Adapter's numerical results for comparison.
+
+### Running
+For ImageNet dataset:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main_imagenet.py --config configs/imagenet.yaml
+```
+For other 10 datasets:
+```bash
+CUDA_VISIBLE_DEVICES=0 python main.py --config configs/dataset.yaml
+```
+The fine-tuning of Tip-Adapter-F will be automatically conducted after the training-free Tip-Adapter.
 
 ## Contributors
 Peng Gao, [Renrui Zhang](https://github.com/ZrrSkywalker)
