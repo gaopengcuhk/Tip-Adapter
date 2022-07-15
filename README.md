@@ -54,7 +54,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py --config configs/dataset.yaml
 The fine-tuning of Tip-Adapter-F will be automatically conducted after the training-free Tip-Adapter.
 
 ## Contributors
-Peng Gao, [Renrui Zhang](https://github.com/ZrrSkywalker)
+[Renrui Zhang](https://github.com/ZrrSkywalker), Peng Gao
 
 ## Acknowledgement
 This repo benefits from [CLIP](https://github.com/openai/CLIP), [CoOp](https://github.com/KaiyangZhou/Dassl.pytorch) and [CLIP-Adapter](https://github.com/gaopengcuhk/CLIP-Adapter). Thanks for their wonderful works.
