@@ -1,5 +1,5 @@
 # Tip-Adapter: Training-free Adaption of CLIP for Few-shot Classification
-Official implementation of ['Tip-Adapter: Training-free Adaption of CLIP for Few-shot Classification'](https://arxiv.org/abs/2111.03930).
+Official implementation of ['Tip-Adapter: Training-free Adaption of CLIP for Few-shot Classification'](https://arxiv.org/pdf/2207.09519.pdf).
 
 The paper has been accepted by **ECCV 2022**.
 ## Introduction
