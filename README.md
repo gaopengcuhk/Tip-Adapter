@@ -44,7 +44,7 @@ Note that the default `load_cache` and `load_pre_feat` are `False` for the first
 ### Numerical Results
 We provide Tip-Adapter's **numerical results** in Figure 4 and 5 of the paper at [exp.log](https://github.com/gaopengcuhk/Tip-Adapter/blob/main/exp.log).
 
-TODO: Add CLIP-Adapter's numerical results for comparison.
+ CLIP-Adapter's numerical results are also updated for comparison.
 
 ### Running
 For ImageNet dataset:
