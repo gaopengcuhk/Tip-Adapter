@@ -23,7 +23,7 @@ def clip_classifier(classnames, template, clip_model):
             # Tokenize the prompts
             classname = classname.replace('_', ' ')
             texts = [t.format(classname) for t in template]
-            texts = clip.tokenize(texts).cuda()
+            texts = clip.tokenize(texts).cpu()
             # prompt ensemble for ImageNet
             class_embeddings = clip_model.encode_text(texts)
             class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
@@ -31,7 +31,7 @@ def clip_classifier(classnames, template, clip_model):
             class_embedding /= class_embedding.norm()
             clip_weights.append(class_embedding)
 
-        clip_weights = torch.stack(clip_weights, dim=1).cuda()
+        clip_weights = torch.stack(clip_weights, dim=1).cpu()
     return clip_weights
 
 
@@ -48,11 +48,11 @@ def build_cache_model(cfg, clip_model, train_loader_cache):
 
                 print('Augment Epoch: {:} / {:}'.format(augment_idx, cfg['augment_epoch']))
                 for i, (images, target) in enumerate(tqdm(train_loader_cache)):
-                    images = images.cuda()
+                    images = images.cpu()
                     image_features = clip_model.encode_image(images)
                     train_features.append(image_features)
                     if augment_idx == 0:
-                        target = target.cuda()
+                        target = target.cpu()
                         cache_values.append(target)
                 cache_keys.append(torch.cat(train_features, dim=0).unsqueeze(0))
             
@@ -78,7 +78,7 @@ def pre_load_features(cfg, split, clip_model, loader):
 
         with torch.no_grad():
             for i, (images, target) in enumerate(tqdm(loader)):
-                images, target = images.cuda(), target.cuda()
+                images, target = images.cpu(), target.cpu()
                 image_features = clip_model.encode_image(images)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 features.append(image_features)

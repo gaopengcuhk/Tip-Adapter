@@ -66,7 +66,7 @@ def run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, tes
 def run_tip_adapter_F(cfg, cache_keys, cache_values, val_features, val_labels, test_features, test_labels, clip_weights, clip_model, train_loader_F):
     
     # Enable the cached keys to be learnable
-    adapter = nn.Linear(cache_keys.shape[0], cache_keys.shape[1], bias=False).to(clip_model.dtype).cuda()
+    adapter = nn.Linear(cache_keys.shape[0], cache_keys.shape[1], bias=False).to(clip_model.dtype).cpu()
     adapter.weight = nn.Parameter(cache_keys.t())
     
     optimizer = torch.optim.AdamW(adapter.parameters(), lr=cfg['lr'], eps=1e-4)
@@ -83,7 +83,7 @@ def run_tip_adapter_F(cfg, cache_keys, cache_values, val_features, val_labels, t
         print('Train Epoch: {:} / {:}'.format(train_idx, cfg['train_epoch']))
 
         for i, (images, target) in enumerate(tqdm(train_loader_F)):
-            images, target = images.cuda(), target.cuda()
+            images, target = images.cpu(), target.cpu()
             with torch.no_grad():
                 image_features = clip_model.encode_image(images)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
