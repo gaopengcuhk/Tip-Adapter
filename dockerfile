@@ -3,7 +3,8 @@ FROM continuumio/miniconda3
 RUN apt update
 RUN apt install -y git
 
-RUN git clone https://github.com/gaopengcuhk/Tip-Adapter
+# RUN git clone https://github.com/gaopengcuhk/Tip-Adapter
+COPY . /Tip-Adapter
 
 WORKDIR /Tip-Adapter
 # RUN conda update -n base -c defaults conda
