@@ -8,8 +8,9 @@ COPY . /Tip-Adapter
 
 WORKDIR /Tip-Adapter
 # RUN conda update -n base -c defaults conda
-RUN conda install -y pytorch torchvision cudatoolkit -c pytorch -c conda-forge
+# RUN conda install -y pytorch torchvision cudatoolkit -c pytorch -c conda-forge
 RUN pip install -r requirements.txt
+RUN conda install pytorch==1.13.0 torchvision==0.14.0 pytorch-cuda=11.7 -c pytorch -c nvidia
 
 # Caltech101 - https://drive.google.com/file/d/137RyRjvTBkBiIfeYBNZBtViDHQ6_Ewsp/view?usp=share_link
 WORKDIR /Tip-Adapter/caltech-101

@@ -12,3 +12,4 @@ ftfy
 regex
 wilds==1.2.2
 tabulate
+chardet
