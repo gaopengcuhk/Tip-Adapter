@@ -83,13 +83,13 @@ class DatasetWrapper(TorchDataset):
 
 class TipAdapter:
     def __init__(
-            self, 
-            device: str,
-            template: List[str] = ['a photo of a {}.'],
-            clip_backbone: str = "RN50",
-            augment_epoch: int = 10,
-            alpha: float = 1.,
-            beta: float = 5.,
+        self, 
+        device: str,
+        template: List[str] = ['a photo of a {}.'],
+        clip_backbone: str = "RN50",
+        augment_epoch: int = 10,
+        alpha: float = 1.,
+        beta: float = 5.,
     ) -> None:
         """ Class that runs tip adapter
         Args: 
@@ -122,8 +122,8 @@ class TipAdapter:
 
 
     def create_cache(
-            self, 
-            few_shot_data: Dict[str, List[PIL.Image.Image]],
+        self, 
+        few_shot_data: Dict[str, List[PIL.Image.Image]],
     ) -> None:
         """ Creates the KV-cache
         Args: 
@@ -198,6 +198,51 @@ class TipAdapter:
             predicted_classes.append(self._class_names[label])
 
         return predicted_classes
+       
+    @property
+    def cache(self) -> Dict[str, torch.Tensor]:
+        '''Returns the cache values
+        '''
+        return {
+            "keys": self._cache_keys, 
+            "values": self._cache_values
+        }
+
+    @cache.setter
+    def cache(self, cache: Dict[str, torch.Tensor]):
+        '''Sets the cache values
+        '''
+        try:
+            self._cache_keys = cache["keys"].to(self._device)
+            self._cache_values = cache["values"].to(self._device)
+        except KeyError as e:
+            raise ValueError(f"Missing key in cache dictionary: {e}")
+
+
+        if "cuda" in self._device:
+            self._cache_values = self._cache_values.half()
+        elif "cpu" in self._device:
+            self._cache_values = self._cache_values.float()
+
+    def load_cache_values(
+        self, 
+        file_path: str
+    ):
+        """Loads the cache from a file
+        """
+        try:
+            loaded_data = torch.load(file_path)
+            self.cache = loaded_data
+        except FileNotFoundError:
+            raise FileNotFoundError(f"The file {file_path} was not found.")
+        
+    def save_cache_values(self, file_path: str):
+        """Saves the cache values to a file."""
+        cache_data = {
+            "keys": self._cache_keys,
+            "values": self._cache_values
+        }
+        torch.save(cache_data, file_path)
 
 
     def _get_test_features(self, imgs: List[PIL.Image.Image]) -> torch.Tensor:
@@ -301,6 +346,12 @@ if __name__ == "__main__":
         test_data[label] = test_ims
     
     tip_adapter.create_cache(data)
+    tip_adapter.save_cache_values("cache_values.pt")
+
+    tip_adapter.load_cache_values("cache_values.pt")
+
+    cache_values = tip_adapter.cache
+    tip_adapter.cache = cache_values
 
     for label, im_list in test_data.items():
         print("Label: ", label)
