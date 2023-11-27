@@ -15,7 +15,7 @@ def cls_acc(output, target, topk=1):
     return acc
 
 
-def clip_classifier(classnames, template, clip_model):
+def clip_classifier(classnames, template, clip_model, device="cuda"):
     with torch.no_grad():
         clip_weights = []
 
@@ -23,7 +23,7 @@ def clip_classifier(classnames, template, clip_model):
             # Tokenize the prompts
             classname = classname.replace('_', ' ')
             texts = [t.format(classname) for t in template]
-            texts = clip.tokenize(texts).cpu()
+            texts = clip.tokenize(texts).to(device)
             # prompt ensemble for ImageNet
             class_embeddings = clip_model.encode_text(texts)
             class_embeddings /= class_embeddings.norm(dim=-1, keepdim=True)
@@ -31,12 +31,11 @@ def clip_classifier(classnames, template, clip_model):
             class_embedding /= class_embedding.norm()
             clip_weights.append(class_embedding)
 
-        clip_weights = torch.stack(clip_weights, dim=1).cpu()
+        clip_weights = torch.stack(clip_weights, dim=1).to(device)
     return clip_weights
 
 
 def build_cache_model(cfg, clip_model, train_loader_cache):
-
     if cfg['load_cache'] == False:    
         cache_keys = []
         cache_values = []
@@ -48,11 +47,11 @@ def build_cache_model(cfg, clip_model, train_loader_cache):
 
                 print('Augment Epoch: {:} / {:}'.format(augment_idx, cfg['augment_epoch']))
                 for i, (images, target) in enumerate(tqdm(train_loader_cache)):
-                    images = images.cpu()
+                    images = images.cuda()
                     image_features = clip_model.encode_image(images)
                     train_features.append(image_features)
                     if augment_idx == 0:
-                        target = target.cpu()
+                        target = target.cuda()
                         cache_values.append(target)
                 cache_keys.append(torch.cat(train_features, dim=0).unsqueeze(0))
             
@@ -78,7 +77,7 @@ def pre_load_features(cfg, split, clip_model, loader):
 
         with torch.no_grad():
             for i, (images, target) in enumerate(tqdm(loader)):
-                images, target = images.cpu(), target.cpu()
+                images, target = images.cuda(), target.cuda()
                 image_features = clip_model.encode_image(images)
                 image_features /= image_features.norm(dim=-1, keepdim=True)
                 features.append(image_features)

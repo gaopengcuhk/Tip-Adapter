@@ -110,7 +110,7 @@ class TipAdapter:
         self._alpha = alpha
         self._beta = beta
 
-        self._clip_model, self._preprocess = clip.load(clip_backbone)
+        self._clip_model, self._preprocess = clip.load(clip_backbone, device=device)
         self._clip_model.eval()
 
         self._train_tranform = transforms.Compose([
@@ -171,7 +171,12 @@ class TipAdapter:
         cache_keys = torch.cat(cache_keys, dim=0).mean(dim=0)
         cache_keys /= cache_keys.norm(dim=-1, keepdim=True)
         cache_keys = cache_keys.permute(1, 0)
-        cache_values = F.one_hot(torch.cat(cache_values, dim=0)).half()
+        cache_values = F.one_hot(torch.cat(cache_values, dim=0))
+
+        if "cuda" in self._device:
+            cache_values = cache_values.half()
+        elif "cpu" in self._device:
+            cache_values = cache_values.float()
 
         self._cache_keys = cache_keys
         self._cache_values = cache_values
@@ -301,5 +306,3 @@ if __name__ == "__main__":
         print("Label: ", label)
         predicted_classes = tip_adapter.run(im_list)
         print("Predicted classes: ", predicted_classes)
-
-    breakpoint()
