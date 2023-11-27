@@ -4,7 +4,7 @@ import torch
 import torch.nn.functional as F
 import torch.nn as nn
 
-import clip
+from . import clip
 
 
 def cls_acc(output, target, topk=1):

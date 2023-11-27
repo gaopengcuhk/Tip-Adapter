@@ -6,8 +6,8 @@ import torch
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset as TorchDataset
 
-import clip
-from utils import *
+from . import clip
+from .utils import *
 
 
 class DatasetWrapper(TorchDataset):
