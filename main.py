@@ -182,7 +182,14 @@ def main():
 
     # Textual features
     print("\nGetting textual features as CLIP's classifier.")
-    clip_weights = clip_classifier(dataset.classnames, dataset.template, clip_model)
+    from extras.prompt_soup import PromptSoup
+    soup = PromptSoup(dataset.classnames, cfg['dataset'], device='cuda',
+                    learn_delta=False).cuda()
+    # load tuned weights if provided
+    if 'prompt_path' in cfg and cfg['prompt_path']:
+        soup.load_state_dict(torch.load(cfg['prompt_path'], map_location='cuda'))
+    clip_weights = soup()        # [C,512] tensor
+
 
     # Construct the cache model by few-shot training set
     print("\nConstructing cache model by few-shot visual features and labels.")
