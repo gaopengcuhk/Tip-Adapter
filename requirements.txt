@@ -1,14 +1,50 @@
+# -------------------------------------------------------------------
+#  Original project lint / style tools
+# -------------------------------------------------------------------
 flake8==3.7.9
 yapf==0.29.0
 isort==4.3.21
+
+# -------------------------------------------------------------------
+#  Core runtime: CLIP, PyTorch, vision utils
+# -------------------------------------------------------------------
+#  Install the CUDA-specific wheel that matches your driver:
+torch>=1.13            # e.g. pip install torch==2.1.2+cu118 -f https://download.pytorch.org/whl/torch_stable.html
+torchvision>=0.14
+torchaudio>=0.13       # (optional but often bundled)
+
+#  OpenAI CLIP repo (no PyPI release):
+git+https://github.com/openai/CLIP.git
+
+#  Image IO
+Pillow>=8.2
+
+# -------------------------------------------------------------------
+#  Few-shot / prompt tuning helpers
+# -------------------------------------------------------------------
+pandas>=1.5
+tqdm>=4.64
+ftfy
+regex
+tabulate
 yacs
-gdown
-tb-nightly
 future
 scipy
 scikit-learn
-tqdm
-ftfy
-regex
-wilds==1.2.2
-tabulate
+
+# -------------------------------------------------------------------
+#  MedMNIST medical image toy datasets
+# -------------------------------------------------------------------
+#  Brings in numpy, torch-dataset wrappers, and downloading helper
+medmnist>=2.1
+
+# -------------------------------------------------------------------
+#  Wildlife / domain-generalisation utilities
+# -------------------------------------------------------------------
+wilds==1.2.2   # used by original Tip-Adapter repo for some benchmarks
+
+# -------------------------------------------------------------------
+#  Misc utilities
+# -------------------------------------------------------------------
+gdown          # convenient Google-Drive downloader
+tb-nightly     # TensorBoard preview build (matches original list)

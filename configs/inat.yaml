@@ -1,0 +1,10 @@
+dataset: inat2021_mini
+root_path: datasets/inat21
+train_csv: datasets/inat21/train_k8.csv
+test_csv:  datasets/inat21/test.csv     # 1 500 balanced imgs
+prompt_path: configs/inat21/trained_prompt.pt   # leave blank to skip tuning
+
+backbone: ViT-B/32
+shots: 8
+init_alpha: 1
+init_beta: 1
